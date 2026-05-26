@@ -15,31 +15,6 @@
   let loadedCount = 0;
   const batchSize = 10;
   let isLoading = false;
-  let currentRandomCard = null;
-
-  const extensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
-
-  async function checkFileExists(url) {
-    try {
-      const response = await fetch(url, { method: 'HEAD' });
-      return response.ok;
-    } catch {
-      return false;
-    }
-  }
-
-  async function findAvatarFile(filename) {
-    if (filename.includes('.')) {
-      const exists = await checkFileExists('Assets/AvatarsFiles/' + filename);
-      return exists ? filename : null;
-    }
-    for (const ext of extensions) {
-      const fullName = filename + ext;
-      const exists = await checkFileExists('Assets/AvatarsFiles/' + fullName);
-      if (exists) return fullName;
-    }
-    return null;
-  }
 
   function createAvatarCard(filename) {
     const card = document.createElement('div');
@@ -97,16 +72,15 @@
 
   function showRandomAvatar() {
     if (allAvatars.length === 0) return;
-    
-    if (currentRandomCard) {
-      currentRandomCard.style.border = '1px solid #e0e0e0';
-      currentRandomCard.style.transform = 'scale(1)';
-      currentRandomCard.style.zIndex = '1';
-      currentRandomCard = null;
-    }
-
     const randomFile = allAvatars[Math.floor(Math.random() * allAvatars.length)];
     updateRandomPreview(randomFile);
+  }
+
+  function getFilename(avatar) {
+    if (avatar.file.includes('.')) {
+      return avatar.file;
+    }
+    return avatar.file + '.png';
   }
 
   function loadMore() {
@@ -122,7 +96,8 @@
     const toLoad = allAvatars.slice(loadedCount, loadedCount + batchSize);
     const fragment = document.createDocumentFragment();
     
-    toLoad.forEach(filename => {
+    toLoad.forEach(avatar => {
+      const filename = getFilename(avatar);
       const card = createAvatarCard(filename);
       fragment.appendChild(card);
     });
@@ -151,27 +126,14 @@
 
   fetch('avatars.json')
     .then(response => response.json())
-    .then(async data => {
+    .then(data => {
       const avatars = data.avatars;
       if (!avatars || avatars.length === 0) {
         container.innerHTML = '<p class="empty-message">Аватарки пока не добавлены.</p>';
         return;
       }
 
-      const foundFiles = [];
-      for (const avatar of avatars) {
-        const filename = await findAvatarFile(avatar.file);
-        if (filename) {
-          foundFiles.push(filename);
-        }
-      }
-
-      if (foundFiles.length === 0) {
-        container.innerHTML = '<p class="empty-message">Аватарки пока не добавлены.</p>';
-        return;
-      }
-
-      allAvatars = foundFiles;
+      allAvatars = avatars;
       loadMore();
       
       window.addEventListener('scroll', handleScroll);
