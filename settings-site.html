@@ -1,0 +1,160 @@
+<!-- settings-site.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Тут вы можете настроить сайт под себя.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ForDis</title>
+  <link rel="icon" type="image/png" href="Pictures/sitelogow.png" id="faviconLight">
+  <link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="top-panel">
+  <a href="index" class="site-brand">
+    <img src="Pictures/sitelogow.png" alt="ForDis" class="brand-icon" id="brandIcon">
+    ForDis
+  </a>
+  <div class="panel-nav">
+    <a href="avatars" class="panel-btn">Аватарки</a>
+    <a href="sounds" class="panel-btn">Звуки</a>
+    <a href="clients" class="panel-btn">Клиенты</a>
+    <a href="bots" class="panel-btn">Боты</a>
+  </div>
+  <div class="search-wrapper">
+    <div class="search-input-container">
+      <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Поиск">
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+  <a href="news" class="news-icon" title="Новости">
+    <img src="Pictures/megaphone1.png" alt="Новости" class="news-icon-img">
+  </a>
+</header>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <a href="settings-site" class="sidebar-btn">Настройки</a>
+      <a href="rules" class="sidebar-btn">Правила</a>
+    </aside>
+
+    <main class="settings-content">
+      <div class="settings-card">
+        <h1 class="settings-title">Настройки</h1>
+        <div class="setting-item">
+          <span class="setting-label">Тёмная тема</span>
+          <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему"></button>
+        </div>
+        <a href="index" class="back-link">← На главную</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('fordis-theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+      }
+      
+      function updateLogo() {
+        const brandIcon = document.getElementById('brandIcon');
+        const favicon = document.getElementById('faviconLight');
+        
+        if (document.body.classList.contains('dark-theme')) {
+          if (brandIcon) brandIcon.src = 'Pictures/sitelogob.png';
+          if (favicon) favicon.href = 'Pictures/sitelogob.png';
+        } else {
+          if (brandIcon) brandIcon.src = 'Pictures/sitelogow.png';
+          if (favicon) favicon.href = 'Pictures/sitelogow.png';
+        }
+      }
+      
+      updateLogo();
+      
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.attributeName === 'class') {
+            updateLogo();
+          }
+        });
+      });
+      
+      observer.observe(document.body, { attributes: true });
+      
+      const themeToggle = document.getElementById('themeToggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+          document.body.classList.toggle('dark-theme');
+          if (document.body.classList.contains('dark-theme')) {
+            localStorage.setItem('fordis-theme', 'dark');
+          } else {
+            localStorage.setItem('fordis-theme', 'light');
+          }
+        });
+      }
+
+      const searchInput = document.getElementById('searchInput');
+      const searchResults = document.getElementById('searchResults');
+
+      if (searchInput && searchResults) {
+        const pages = [
+          { name: 'Главная', url: 'index' },
+          { name: 'Аватарки', url: 'avatars' },
+          { name: 'Звуки', url: 'sounds' },
+          { name: 'Клиенты', url: 'clients' },
+          { name: 'Боты', url: 'bots' },
+          { name: 'Контакты', url: 'contacts' },
+          { name: 'Правила', url: 'rules' },
+          { name: 'Настройки', url: 'settings-site' },
+          { name: 'Новости', url: 'news' },
+          { name: 'Discord в России', url: 'zapret-help' }
+        ];
+
+        searchInput.addEventListener('input', function() {
+          const query = this.value.toLowerCase().trim();
+          
+          if (query.length === 0) {
+            searchResults.classList.remove('active');
+            return;
+          }
+
+          const filtered = pages.filter(page => 
+            page.name.toLowerCase().includes(query)
+          );
+
+          if (filtered.length === 0) {
+            searchResults.innerHTML = '<div class="search-result-item">Ничего не найдено</div>';
+          } else {
+            searchResults.innerHTML = filtered.map(page => 
+              `<div class="search-result-item" data-url="${page.url}">${page.name}</div>`
+            ).join('');
+          }
+
+          searchResults.classList.add('active');
+
+          document.querySelectorAll('.search-result-item').forEach(item => {
+            item.addEventListener('click', function() {
+              const url = this.getAttribute('data-url');
+              if (url) {
+                window.location.href = url;
+              }
+            });
+          });
+        });
+
+        document.addEventListener('click', function(e) {
+          if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.classList.remove('active');
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

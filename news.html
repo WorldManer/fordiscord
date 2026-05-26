@@ -1,0 +1,59 @@
+<!-- news.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Тут публикуются различные новости нашего сайта.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ForDis</title>
+  <link rel="icon" type="image/png" href="Pictures/sitelogow.png" id="faviconLight">
+  <link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+ <!-- header для index.html -->
+<header class="top-panel">
+  <a href="index" class="site-brand">
+    <img src="Pictures/sitelogow.png" alt="ForDis" class="brand-icon" id="brandIcon">
+    ForDis
+  </a>
+  <div class="panel-nav">
+    <a href="avatars" class="panel-btn">Аватарки</a>
+    <a href="sounds" class="panel-btn">Звуки</a>
+    <a href="clients" class="panel-btn">Клиенты</a>
+    <a href="bots" class="panel-btn">Боты</a>
+  </div>
+  <div class="search-wrapper">
+    <div class="search-input-container">
+      <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Поиск">
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+  <a href="news" class="news-icon" title="Новости">
+    <img src="Pictures/megaphone1.png" alt="Новости" class="news-icon-img">
+  </a>
+</header>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <a href="settings-site" class="sidebar-btn">Настройки</a>
+      <a href="rules" class="sidebar-btn">Правила</a>
+    </aside>
+
+    <main class="main-content">
+      <div class="text-section-full">
+        <div class="site-full-name">Новости</div>
+        <p class="main-description" style="border-left: none; padding-left: 0;">
+          Пока что нет новостей.
+        </p>
+      </div>
+    </main>
+  </div>
+
+  <script src="1x03e.js"></script>
+</body>
+</html>

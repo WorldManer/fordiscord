@@ -1,0 +1,102 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="ForDiscord — это прямой доступ к ресурсам для Discord. Никаких лишних разделов, только нужные файлы и инструменты. На этом сайте можно найти всё, начиная от аватарок, заканчивая клиентами дискорда.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ForDis</title>
+  <link rel="icon" type="image/png" href="Pictures/sitelogow.png" id="faviconLight">
+  <link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="top-panel">
+  <a href="index" class="site-brand">
+    <img src="Pictures/sitelogow.png" alt="ForDis" class="brand-icon" id="brandIcon">
+    ForDis
+  </a>
+  <div class="panel-nav">
+    <a href="avatars" class="panel-btn">Аватарки</a>
+    <a href="sounds" class="panel-btn">Звуки</a>
+    <a href="clients" class="panel-btn">Клиенты</a>
+    <a href="bots" class="panel-btn">Боты</a>
+  </div>
+  <div class="search-wrapper">
+    <div class="search-input-container">
+      <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Поиск">
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+  <a href="news" class="news-icon" title="Новости">
+    <img src="Pictures/megaphone1.png" alt="Новости" class="news-icon-img">
+  </a>
+</header>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <a href="settings-site" class="sidebar-btn">Настройки</a>
+      <a href="rules" class="sidebar-btn">Правила</a>
+    </aside>
+
+    <main class="main-content">
+      <div class="image-wrapper">
+        <div class="slider-viewport">
+          <div class="slider-window">
+            <div class="slider-track" id="sliderTrack">
+              <div class="slide">
+                <img src="Pictures/1m.png" alt="Resource 1" class="slider-image">
+              </div>
+              <div class="slide">
+                <img src="Pictures/2m.png" alt="Resource 2" class="slider-image">
+              </div>
+              <div class="slide">
+                <img src="Pictures/3m.png" alt="Resource 3" class="slider-image">
+              </div>
+            </div>
+          </div>
+          <button class="side-arrow side-arrow-left" id="prevBtn" aria-label="Предыдущая">
+            <span class="arrow-left"></span>
+          </button>
+          <button class="side-arrow side-arrow-right" id="nextBtn" aria-label="Следующая">
+            <span class="arrow-right"></span>
+          </button>
+          <div class="slider-dots">
+            <button class="dot active" data-index="0"></button>
+            <button class="dot" data-index="1"></button>
+            <button class="dot" data-index="2"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-row">
+        <div class="side-buttons">
+          <a href="contacts" class="side-nav-btn">Контакты</a>
+          <a href="rules" class="side-nav-btn">Правила</a>
+        </div>
+        <div class="text-section">
+          <div class="site-full-name">ForDiscord</div>
+          <p class="main-description">
+            ForDiscord — это прямой доступ к ресурсам для Discord. Никаких лишних разделов, только нужные файлы и инструменты. На этом сайте можно найти всё, начиная от аватарок, заканчивая клиентами дискорда.
+          </p>
+          <hr class="divider">
+          <p class="disclaimer-text">
+            Ответственность за свои аккаунты при использовании каких-либо аватарок или файлов с данного сайта несут только вы сами.
+          </p>
+        </div>
+      </div>
+
+      <div class="discord-russia-section">
+        <h2 class="discord-russia-title">Discord в России</h2>
+        <a href="zapret-help" class="discord-russia-toggle" style="text-decoration: none; display: block;">Как заставить Discord работать в России?</a>
+      </div>
+    </main>
+  </div>
+
+  <script src="1x03e.js"></script>
+</body>
+</html>

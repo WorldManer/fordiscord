@@ -1,0 +1,160 @@
+<!-- zapret-help.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Тут вы можете настроить запретку на дискорд, чтобы пользоваться им в России.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ForDis</title>
+  <link rel="icon" type="image/png" href="Pictures/sitelogow.png" id="faviconLight">
+  <link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- header для index.html -->
+<header class="top-panel">
+  <a href="index" class="site-brand">
+    <img src="Pictures/sitelogow.png" alt="ForDis" class="brand-icon" id="brandIcon">
+    ForDis
+  </a>
+  <div class="panel-nav">
+    <a href="avatars" class="panel-btn">Аватарки</a>
+    <a href="sounds" class="panel-btn">Звуки</a>
+    <a href="clients" class="panel-btn">Клиенты</a>
+    <a href="bots" class="panel-btn">Боты</a>
+  </div>
+  <div class="search-wrapper">
+    <div class="search-input-container">
+      <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Поиск">
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+  <a href="news" class="news-icon" title="Новости">
+    <img src="Pictures/megaphone1.png" alt="Новости" class="news-icon-img">
+  </a>
+</header>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <a href="settings-site" class="sidebar-btn">Настройки</a>
+      <a href="rules" class="sidebar-btn">Правила</a>
+    </aside>
+
+    <main class="main-content">
+      <div class="discord-russia-section">
+        <h2 class="discord-russia-title">Discord в России</h2>
+        
+        <div class="instruction-block">
+          <h3 class="instruction-heading">⚙️ Использование</h3>
+          
+          <div class="instruction-step">
+            <h4 class="step-title">Включите Secure DNS</h4>
+            <ul class="step-list">
+              <li>В Chrome — "Использовать безопасный DNS", и выбрать поставщика услуг DNS (выбрать вариант, отличный от поставщика по умолчанию)</li>
+              <li>В Firefox — "Включить DNS через HTTPS, используя: Максимальную защиту", затем "Выбрать поставщика" и вписать URL поставщика вручную, например можно использовать <strong>https://dns.google/dns-query</strong> (т.к. поставщик Cloudflare может быть заблокирован)</li>
+              <li>В Windows 11 поддерживается включение Secure DNS прямо в настройках ОС. Рекомендуется, если вы пользуетесь Windows 11</li>
+            </ul>
+          </div>
+
+          <div class="instruction-step">
+            <h4 class="step-title">Скачайте архив (zip/rar) со страницы последнего релиза</h4>
+          </div>
+
+          <div class="instruction-step">
+            <h4 class="step-title">Зайдите в свойства скачанного архива и поставьте галочку "Разблокировать"</h4>
+            <p class="step-note">Если вы используете архиватор 7-Zip или PeaZip, этот шаг можно пропустить</p>
+          </div>
+
+          <div class="instruction-step">
+            <h4 class="step-title">Распакуйте содержимое архива по пути, который не содержит кириллицу/спец. символы</h4>
+          </div>
+
+          <div class="instruction-step">
+            <h4 class="step-title">Запустите нужный файл</h4>
+          </div>
+        </div>
+
+        <div class="instruction-block">
+          <h3 class="instruction-heading">ℹ️ Краткие описания файлов</h3>
+          
+          <div class="instruction-step">
+            <h4 class="step-title">general.bat — запуск стратегии вручную</h4>
+            <p class="step-note">Запуск вручную можно использовать для проверки работоспособности стратегий. Работоспособность той или иной стратегии зависит от многих факторов. Пробуйте разные стратегии (ALT, FAKE и другие), пока не найдёте рабочее для вас решение</p>
+          </div>
+
+          <div class="instruction-step">
+            <h4 class="step-title">service.bat — установка в автозапуск и другие функции:</h4>
+            <ul class="step-list">
+              <li><strong>Install Service</strong> — установка любой стратегии в автозапуск (services.msc)</li>
+              <li><strong>Remove Services</strong> — удаление стратегии и WinDivert из служб</li>
+              <li><strong>Check Status</strong> — проверка статуса обхода и служб (стратегии на автозапуске и WinDivert)</li>
+              <li><strong>Game Filter</strong> — переключение режима обхода для игр (и других сервисов, использующих UDP и TCP на портах выше 1023). После переключения требуется перезапуск стратегии. В скобках указан текущий статус (включено/выключено)</li>
+              <li><strong>IPSet Filter</strong> — переключение режима обхода сервисов из ipset-all.txt. Полезно при тестировании, если не работает ресурс, который без zapret работает. В скобках указан текущий статус: none, loaded, any</li>
+              <li><strong>Auto-Update Check</strong> — Вкл/Выкл автоматическую проверку на обновления</li>
+              <li><strong>Update IPSet List</strong> — обновление списка ipset-all.txt актуальным из репозитория</li>
+              <li><strong>Update Hosts File</strong> — обновление файла hosts для починки веб версии телеграма и подключения к голосовому чату Discord</li>
+              <li><strong>Check for Updates</strong> — проверка на обновления</li>
+              <li><strong>Run Diagnostics</strong> — диагностика на распространённые причины, по которым zapret может не работать. В конце можно очистить кэш Discord, что может помочь, если он неожиданно перестал работать</li>
+              <li><strong>Run Tests</strong> — запуск утилиты для проверки стратегий на работоспособность: Standard tests и DPI checkers</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="instruction-block">
+          <h3 class="instruction-heading">☑️ Распространенные вопросы и проблемы</h3>
+          
+          <div class="instruction-step">
+            <h4 class="step-title">После запуска скрипта general* ничего не происходит</h4>
+            <p class="step-note">После запуска стратегии (отдельным bat файлом, не через service), должен открыться winws.exe (обход), который можно увидеть в панели задач. Если этого не произошло, то см. инструкцию в репозитории.</p>
+          </div>
+
+          <div class="instruction-step">
+            <h4 class="step-title">Не работает телеграм (веб версия) или бесконечное "подключение" к голосовому чату Discord</h4>
+            <p class="step-note">Запустите service.bat, выберите пункт <strong>Update hosts file</strong>. После чего, если ваш hosts будет неактуальным, то Вам будет предложено обновить его самостоятельно: скопируйте весь текст из открывшегося блокнота, откройте файл hosts в появившейся папке с помощью текстового редактора, открытого от имени администратора, добавьте в конец файла hosts то, что скопировали (или замените, если до этого Вы уже добавляли подобное), сохраните и перепроверьте подключение.</p>
+          </div>
+
+          <div class="instruction-step">
+            <h4 class="step-title">Обход не работает / перестал работать</h4>
+            <p class="step-note">Стратегии со временем могут переставать работать. Определенная стратегия может работать какое-то время, но со временем она может переставать работать из-за обнаружения. В репозитории представлены множество различных стратегий для обхода. Если ни одна из них вам не помогает, то вам необходимо создать новую, взяв за основу одну из представленных здесь и изменив её параметры.</p>
+            <ul class="step-list">
+              <li>Проверьте, чтобы не было ошибок в service.bat -> Run Diagnostics</li>
+              <li>Убедитесь, что адрес ресурса записан в списках доменов или IP</li>
+              <li>Проверьте другие стратегии (ALT/FAKE и другие)</li>
+              <li>Попробуйте полную переустановку (см. раздел ниже)</li>
+            </ul>
+          </div>
+
+          <div class="instruction-step">
+            <h4 class="step-title">Как переустановить/обновить полностью?</h4>
+            <ol class="step-list">
+              <li>Сохраните ресурсы/данные, которые вы сами добавляли</li>
+              <li>Перезапустите устройство</li>
+              <li>service.bat -> Remove Services</li>
+              <li>service.bat -> Run Diagnostics (если есть ошибки — устраните их) -> в конце Y</li>
+              <li>Удалите папку с запретом</li>
+              <li>Скачайте последнюю версию со страницы релизов (zapret-discord-youtube-...)</li>
+              <li>Нажмите пкм по архиву -> свойства. Если снизу справа есть галочка разблокировать, то нажмите на неё -> применить -> ОК</li>
+              <li>Распакуйте в новую папку в корне диска (без спец. символов и пробелов)</li>
+              <li>Далее пробуйте запускать различные general скрипты (стратегии). Проверьте доступность интернет ресурсов — если не работают, то закрывайте программу (в панели задач иконка замочка) и пробуйте другую стратегию</li>
+              <li>Как найдёте рабочую стратегию, можете поставить её на автозапуск: service.bat -> Install Service -> выбираете нужную</li>
+            </ol>
+          </div>
+
+          <div class="instruction-step">
+            <h4 class="step-title">Не работает игра/приложение с включённым запретом</h4>
+            <p class="step-note">Проверьте, что в service.bat Game Filter disabled, а IPSet Filter none. Иначе это может затронуть доступность ресурсов, которых вы не ожидали.</p>
+          </div>
+        </div>
+
+        <a href="https://github.com/Flowseal/zapret-discord-youtube" target="_blank" class="download-zapret-btn">Скачать Zapret</a>
+      </div>
+    </main>
+  </div>
+
+  <script src="1x03e.js"></script>
+</body>
+</html>
