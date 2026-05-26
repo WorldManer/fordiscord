@@ -111,35 +111,41 @@
 
   function loadMore() {
     if (isLoading) return;
+    if (loadedCount >= allAvatars.length) {
+      loadMoreBtn.style.display = 'none';
+      return;
+    }
+    
     isLoading = true;
+    loadMoreBtn.style.display = 'none';
     
     const toLoad = allAvatars.slice(loadedCount, loadedCount + batchSize);
+    const fragment = document.createDocumentFragment();
     
-    requestAnimationFrame(() => {
-      toLoad.forEach(filename => {
-        const card = createAvatarCard(filename);
-        container.appendChild(card);
-      });
-      loadedCount += toLoad.length;
-      
-      if (loadedCount >= allAvatars.length) {
-        loadMoreBtn.style.display = 'none';
-      } else {
-        loadMoreBtn.style.display = 'block';
-      }
-      
-      isLoading = false;
+    toLoad.forEach(filename => {
+      const card = createAvatarCard(filename);
+      fragment.appendChild(card);
     });
+    
+    container.appendChild(fragment);
+    loadedCount += toLoad.length;
+    
+    if (loadedCount < allAvatars.length) {
+      loadMoreBtn.style.display = 'block';
+    }
+    
+    isLoading = false;
   }
 
   function handleScroll() {
+    if (isLoading) return;
+    if (loadedCount >= allAvatars.length) return;
+    
     const scrollPosition = window.innerHeight + window.scrollY;
     const documentHeight = document.documentElement.scrollHeight;
     
-    if (scrollPosition >= documentHeight - 200) {
-      if (loadedCount < allAvatars.length && !isLoading) {
-        loadMore();
-      }
+    if (scrollPosition >= documentHeight - 300) {
+      loadMore();
     }
   }
 
@@ -166,10 +172,7 @@
       }
 
       allAvatars = foundFiles;
-      
-      requestAnimationFrame(() => {
-        loadMore();
-      });
+      loadMore();
       
       window.addEventListener('scroll', handleScroll);
     })
