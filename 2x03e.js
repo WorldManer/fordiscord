@@ -16,18 +16,40 @@
   const batchSize = 10;
   let isLoading = false;
 
-  function createAvatarCard(filename) {
+  function getFilename(avatar) {
+    if (avatar.file.includes('.')) {
+      return avatar.file;
+    }
+    return avatar.file + '.png';
+  }
+
+  function getFallbackFilename(avatar) {
+    const name = avatar.file.includes('.') ? avatar.file.split('.')[0] : avatar.file;
+    if (getFilename(avatar).endsWith('.png')) {
+      return name + '.jpg';
+    }
+    return name + '.png';
+  }
+
+  function createAvatarCard(avatar) {
     const card = document.createElement('div');
     card.className = 'avatar-card';
 
     const img = document.createElement('img');
-    img.src = 'Assets/AvatarsFiles/' + filename;
-    img.alt = filename;
+    const primaryFile = getFilename(avatar);
+    const fallbackFile = getFallbackFilename(avatar);
+    
+    img.src = 'Assets/AvatarsFiles/' + primaryFile;
+    img.alt = primaryFile;
     img.className = 'avatar-image';
     img.loading = 'lazy';
 
     img.onerror = function() {
-      card.style.display = 'none';
+      if (img.src.includes(primaryFile)) {
+        img.src = 'Assets/AvatarsFiles/' + fallbackFile;
+      } else {
+        card.style.display = 'none';
+      }
     };
 
     const overlay = document.createElement('div');
@@ -42,9 +64,10 @@
     card.appendChild(overlay);
     
     card.addEventListener('click', function() {
+      const currentSrc = img.src.split('/').pop();
       const link = document.createElement('a');
-      link.href = 'Assets/AvatarsFiles/' + filename;
-      link.download = filename;
+      link.href = 'Assets/AvatarsFiles/' + currentSrc;
+      link.download = currentSrc;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -53,17 +76,28 @@
     return card;
   }
 
-  function updateRandomPreview(filename) {
+  function updateRandomPreview(avatar) {
     randomPreview.innerHTML = '';
     const img = document.createElement('img');
-    img.src = 'Assets/AvatarsFiles/' + filename;
-    img.alt = filename;
+    const primaryFile = getFilename(avatar);
+    const fallbackFile = getFallbackFilename(avatar);
+    
+    img.src = 'Assets/AvatarsFiles/' + primaryFile;
+    img.alt = primaryFile;
+
+    img.onerror = function() {
+      if (img.src.includes(primaryFile)) {
+        img.src = 'Assets/AvatarsFiles/' + fallbackFile;
+      }
+    };
+
     randomPreview.appendChild(img);
     
     randomPreview.onclick = function() {
+      const currentSrc = img.src.split('/').pop();
       const link = document.createElement('a');
-      link.href = 'Assets/AvatarsFiles/' + filename;
-      link.download = filename;
+      link.href = 'Assets/AvatarsFiles/' + currentSrc;
+      link.download = currentSrc;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -72,15 +106,8 @@
 
   function showRandomAvatar() {
     if (allAvatars.length === 0) return;
-    const randomFile = allAvatars[Math.floor(Math.random() * allAvatars.length)];
-    updateRandomPreview(randomFile);
-  }
-
-  function getFilename(avatar) {
-    if (avatar.file.includes('.')) {
-      return avatar.file;
-    }
-    return avatar.file + '.png';
+    const randomAvatar = allAvatars[Math.floor(Math.random() * allAvatars.length)];
+    updateRandomPreview(randomAvatar);
   }
 
   function loadMore() {
@@ -97,8 +124,7 @@
     const fragment = document.createDocumentFragment();
     
     toLoad.forEach(avatar => {
-      const filename = getFilename(avatar);
-      const card = createAvatarCard(filename);
+      const card = createAvatarCard(avatar);
       fragment.appendChild(card);
     });
     
