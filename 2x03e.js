@@ -16,7 +16,6 @@
   const batchSize = 10;
   let isLoading = false;
   let currentRandomCard = null;
-  let currentRandomFile = null;
 
   const extensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
 
@@ -107,7 +106,6 @@
     }
 
     const randomFile = allAvatars[Math.floor(Math.random() * allAvatars.length)];
-    currentRandomFile = randomFile;
     updateRandomPreview(randomFile);
   }
 
@@ -116,19 +114,22 @@
     isLoading = true;
     
     const toLoad = allAvatars.slice(loadedCount, loadedCount + batchSize);
-    toLoad.forEach(filename => {
-      const card = createAvatarCard(filename);
-      container.appendChild(card);
+    
+    requestAnimationFrame(() => {
+      toLoad.forEach(filename => {
+        const card = createAvatarCard(filename);
+        container.appendChild(card);
+      });
+      loadedCount += toLoad.length;
+      
+      if (loadedCount >= allAvatars.length) {
+        loadMoreBtn.style.display = 'none';
+      } else {
+        loadMoreBtn.style.display = 'block';
+      }
+      
+      isLoading = false;
     });
-    loadedCount += toLoad.length;
-    
-    if (loadedCount >= allAvatars.length) {
-      loadMoreBtn.style.display = 'none';
-    } else {
-      loadMoreBtn.style.display = 'block';
-    }
-    
-    isLoading = false;
   }
 
   function handleScroll() {
@@ -165,7 +166,10 @@
       }
 
       allAvatars = foundFiles;
-      loadMore();
+      
+      requestAnimationFrame(() => {
+        loadMore();
+      });
       
       window.addEventListener('scroll', handleScroll);
     })
