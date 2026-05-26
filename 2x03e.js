@@ -15,7 +15,7 @@
   let loadedCount = 0;
   const batchSize = 10;
   let isLoading = false;
-  let imageCache = new Set(); // Кеш для отслеживания загруженных изображений
+  let preloadedImages = new Set();
 
   function getFilename(avatar) {
     if (avatar.file.includes('.')) {
@@ -24,69 +24,56 @@
     return avatar.file + '.png';
   }
 
-  function getFallbackFilename(avatar) {
-    const name = avatar.file.includes('.') ? avatar.file.split('.')[0] : avatar.file;
-    if (getFilename(avatar).endsWith('.png')) {
-      return name + '.jpg';
-    }
-    return name + '.png';
-  }
-
-  // Предзагрузка изображения
-  function preloadImage(src, callback) {
-    const img = new Image();
-    img.onload = () => {
-      if (callback) callback(src);
-    };
-    img.onerror = () => {
-      if (callback) callback(null);
-    };
-    img.src = src;
-  }
-
-  // Пакетная предзагрузка нескольких изображений
-  function preloadBatch(avatars, startIndex = 0, count = 10) {
-    const toPreload = avatars.slice(startIndex, startIndex + count);
-    toPreload.forEach(avatar => {
-      const primaryFile = getFilename(avatar);
-      const src = 'Assets/AvatarsFiles/' + primaryFile;
-      if (!imageCache.has(src)) {
-        imageCache.add(src);
-        preloadImage(src);
+  // Быстрая предзагрузка изображения
+  function preloadImageFast(src, priority = false) {
+    if (preloadedImages.has(src)) return Promise.resolve(src);
+    
+    return new Promise((resolve) => {
+      const img = new Image();
+      if (priority) {
+        // Высокий приоритет для первых изображений
+        img.fetchPriority = 'high';
       }
+      img.onload = () => {
+        preloadedImages.add(src);
+        resolve(src);
+      };
+      img.onerror = () => resolve(null);
+      img.src = src;
     });
   }
 
-  function createAvatarCard(avatar, preloadPriority = false) {
+  async function preloadFirstBatch(avatars, count = 10) {
+    const promises = avatars.slice(0, count).map(avatar => {
+      const primaryFile = getFilename(avatar);
+      const src = 'Assets/AvatarsFiles/' + primaryFile;
+      return preloadImageFast(src, true);
+    });
+    await Promise.all(promises);
+  }
+
+  function createAvatarCard(avatar, isPriority = false) {
     const card = document.createElement('div');
     card.className = 'avatar-card';
 
     const img = document.createElement('img');
     const primaryFile = getFilename(avatar);
-    const fallbackFile = getFallbackFilename(avatar);
     const src = 'Assets/AvatarsFiles/' + primaryFile;
     
     img.className = 'avatar-image';
-    img.loading = preloadPriority ? 'eager' : 'lazy';
+    img.loading = isPriority ? 'eager' : 'lazy';
     
-    // Используем decode() для ускорения отрисовки
-    if (preloadPriority && 'decode' in img) {
-      img.decoding = 'async';
+    if (isPriority && 'decode' in img) {
+      img.decoding = 'sync'; // Синхронное декодирование для приоритетных изображений
     }
+    
+    img.src = src;
+    img.alt = primaryFile;
 
-    // Устанавливаем src с обработкой ошибок
-    const setImageSrc = (srcToLoad) => {
-      img.src = srcToLoad;
-      img.onerror = function() {
-        if (img.src.includes(primaryFile)) {
-          img.src = 'Assets/AvatarsFiles/' + fallbackFile;
-        } else {
-          card.style.display = 'none';
-        }
-      };
+    // Простая обработка ошибки - скрываем карточку если изображение не загрузилось
+    img.onerror = function() {
+      card.style.display = 'none';
     };
-
-    setImageSrc(src);
 
     const overlay = document.createElement('div');
     overlay.className = 'avatar-overlay';
@@ -116,16 +103,15 @@
     randomPreview.innerHTML = '';
     const img = document.createElement('img');
     const primaryFile = getFilename(avatar);
-    const fallbackFile = getFallbackFilename(avatar);
+    const src = 'Assets/AvatarsFiles/' + primaryFile;
     
-    img.src = 'Assets/AvatarsFiles/' + primaryFile;
+    img.src = src;
     img.alt = primaryFile;
     img.loading = 'eager';
+    img.fetchPriority = 'high';
 
     img.onerror = function() {
-      if (img.src.includes(primaryFile)) {
-        img.src = 'Assets/AvatarsFiles/' + fallbackFile;
-      }
+      randomPreview.innerHTML = '<p class="error-message">Ошибка загрузки</p>';
     };
 
     randomPreview.appendChild(img);
@@ -160,24 +146,17 @@
     const toLoad = allAvatars.slice(loadedCount, loadedCount + batchSize);
     const fragment = document.createDocumentFragment();
     
-    // Определяем, какие изображения загружаются в первую очередь
     const isFirstBatch = loadedCount === 0;
     
     toLoad.forEach((avatar, index) => {
-      const isPriority = isFirstBatch && index < 5; // Первые 5 изображений загружаем с высоким приоритетом
+      // Первые 5 изображений загружаем с высоким приоритетом
+      const isPriority = isFirstBatch && index < 5;
       const card = createAvatarCard(avatar, isPriority);
       fragment.appendChild(card);
     });
     
     container.appendChild(fragment);
     loadedCount += toLoad.length;
-    
-    // Предзагружаем следующие изображения в фоне
-    if (loadedCount < allAvatars.length) {
-      setTimeout(() => {
-        preloadBatch(allAvatars, loadedCount, 5);
-      }, 100);
-    }
     
     if (loadedCount < allAvatars.length) {
       loadMoreBtn.style.display = 'block';
@@ -186,7 +165,7 @@
     isLoading = false;
   }
 
-  // Улучшенная функция обработки скролла с throttle
+  // Throttle для scroll события
   let scrollTimeout;
   function handleScroll() {
     if (scrollTimeout) return;
@@ -201,29 +180,12 @@
         loadMore();
       }
       scrollTimeout = null;
-    }, 100);
-  }
-
-  // Используем Intersection Observer для предзагрузки при скролле
-  let observer;
-  function setupIntersectionObserver() {
-    observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !isLoading && loadedCount < allAvatars.length) {
-          const scrollPercentage = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
-          if (scrollPercentage > 0.7) { // При достижении 70% скролла
-            loadMore();
-          }
-        }
-      });
-    }, { threshold: 0.1 });
-    
-    observer.observe(document.body);
+    }, 150);
   }
 
   fetch('avatars.json')
     .then(response => response.json())
-    .then(data => {
+    .then(async data => {
       const avatars = data.avatars;
       if (!avatars || avatars.length === 0) {
         container.innerHTML = '<p class="empty-message">Аватарки пока не добавлены.</p>';
@@ -232,13 +194,14 @@
 
       allAvatars = avatars;
       
-      // Предзагружаем первые 10 изображений до их отображения
-      preloadBatch(allAvatars, 0, 10);
+      // Предзагружаем первые 10 изображений мгновенно
+      await preloadFirstBatch(allAvatars, 10);
       
+      // Загружаем первые 10 аватарок
       loadMore();
       
+      // Добавляем обработчик скролла
       window.addEventListener('scroll', handleScroll);
-      setupIntersectionObserver();
     })
     .catch(error => {
       console.error('Ошибка загрузки avatars.json:', error);
