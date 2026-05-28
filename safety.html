@@ -8,6 +8,193 @@
   <link rel="icon" type="image/png" href="Pictures/sitelogow.png" id="faviconLight">
   <link rel="stylesheet" href="main.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .safety-article {
+      padding: 40px 48px;
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .safety-article h1 {
+      font-size: 2em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #1a1a1a;
+      line-height: 1.3;
+    }
+
+    body.dark-theme .safety-article h1 {
+      color: #ffffff;
+    }
+
+    .safety-subtitle {
+      color: #777;
+      margin-bottom: 36px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    body.dark-theme .safety-subtitle {
+      color: #8b909c;
+    }
+
+    .safety-section {
+      margin-bottom: 44px;
+    }
+
+    .safety-section h2 {
+      font-size: 1.5em;
+      font-weight: 600;
+      color: #1a1a1a;
+      border-bottom: 2px solid #5865f2;
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+    }
+
+    body.dark-theme .safety-section h2 {
+      color: #ffffff;
+    }
+
+    .safety-section h3 {
+      font-size: 1.15em;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+
+    body.dark-theme .safety-section h3 {
+      color: #e1e3e6;
+    }
+
+    .safety-section p {
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    body.dark-theme .safety-section p {
+      color: #b4bac6;
+    }
+
+    .safety-section ul,
+    .safety-section ol {
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+
+    .safety-section li {
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.8;
+      margin-bottom: 8px;
+      padding-left: 4px;
+    }
+
+    body.dark-theme .safety-section li {
+      color: #b4bac6;
+    }
+
+    .safety-section li strong {
+      color: #1a1a1a;
+    }
+
+    body.dark-theme .safety-section li strong {
+      color: #ffffff;
+    }
+
+    .token-example {
+      background-color: #f0f0f0;
+      border: 1px solid #d0d0d0;
+      padding: 14px 18px;
+      border-radius: 0;
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      font-size: 0.8rem;
+      word-break: break-all;
+      color: #c7254e;
+      margin: 12px 0;
+      display: block;
+    }
+
+    body.dark-theme .token-example {
+      background-color: #1a1d24;
+      border-color: #2a2d35;
+      color: #e06c75;
+    }
+
+    .safety-section code {
+      background-color: #f0f0f0;
+      padding: 2px 6px;
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      font-size: 0.85em;
+      color: #c7254e;
+      border: 1px solid #e0e0e0;
+    }
+
+    body.dark-theme .safety-section code {
+      background-color: #1a1d24;
+      border-color: #2a2d35;
+      color: #e06c75;
+    }
+
+    .safety-warning {
+      background-color: #fff8e1;
+      border-left: 4px solid #ffa000;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+
+    body.dark-theme .safety-warning {
+      background-color: #1e1a0e;
+      border-left-color: #ffa000;
+    }
+
+    .safety-warning p {
+      margin: 0;
+      font-weight: 500;
+      color: #5d4037;
+    }
+
+    body.dark-theme .safety-warning p {
+      color: #ffe082;
+    }
+
+    .safety-conclusion {
+      border-top: 1px solid #e0e0e0;
+      padding-top: 28px;
+      margin-top: 20px;
+    }
+
+    body.dark-theme .safety-conclusion {
+      border-top-color: #262932;
+    }
+
+    .safety-conclusion p {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    body.dark-theme .safety-conclusion p {
+      color: #e1e3e6;
+    }
+
+    @media (max-width: 800px) {
+      .safety-article {
+        padding: 24px 20px;
+      }
+
+      .safety-article h1 {
+        font-size: 1.5em;
+      }
+
+      .safety-section h2 {
+        font-size: 1.25em;
+      }
+    }
+  </style>
 </head>
 <body>
 <header class="top-panel">
@@ -44,25 +231,25 @@
     </aside>
 
     <main class="main-content">
-      <article style="padding: 20px; max-width: 800px; margin: 0 auto; font-family: 'Montserrat', sans-serif; line-height: 1.7; color: #e0e0e0;">
-        <h1 style="font-size: 2em; font-weight: 700; margin-bottom: 10px; color: #ffffff;">Руководство по комплексной защите учетной записи Discord</h1>
-        <p style="color: #a0a0a0; margin-bottom: 30px;">Ответственный подход к безопасности ваших данных и цифровой идентификации.</p>
+      <article class="safety-article">
+        <h1>Руководство по комплексной защите учетной записи Discord</h1>
+        <p class="safety-subtitle">Ответственный подход к безопасности ваших данных и цифровой идентификации.</p>
 
-        <section style="margin-bottom: 40px;">
-          <h2 style="font-size: 1.5em; font-weight: 600; color: #ffffff; border-bottom: 2px solid #5865f2; padding-bottom: 5px; margin-bottom: 15px;">Принципы защиты учетной записи</h2>
+        <section class="safety-section">
+          <h2>Принципы защиты учетной записи</h2>
           <p>Безопасность аккаунта зависит исключительно от действий его владельца. Несоблюдение изложенных ниже правил с высокой вероятностью приведет к компрометации учетной записи и необратимой потере доступа.</p>
           
-          <h3 style="font-weight: 600; margin-top: 20px;">Действия, которые необходимо выполнить:</h3>
+          <h3>Действия, которые необходимо выполнить:</h3>
           <ul>
             <li><strong>Включение двухфакторной аутентификации (2FA).</strong> Это критически важный уровень защиты. Используйте приложение-аутентификатор, такое как Google Authenticator или Authy. Не используйте SMS-аутентификацию в качестве единственного метода. Обязательно сохраните резервные коды в зашифрованном виде или в физически недоступном для посторонних месте.</li>
             <li><strong>Использование уникального и сложного пароля.</strong> Пароль должен состоять минимум из 12 символов, включая строчные и прописные буквы, цифры и специальные символы. Данный пароль не должен использоваться где-либо еще. Рекомендуется применение менеджера паролей.</li>
-            <li><strong>Настройка конфиденциальности.</strong> В разделе «Настройки» -> «Конфиденциальность и безопасность» отключите разрешение на личные сообщения от пользователей, не являющихся вашими друзьями или участниками общих серверов. Отключите автоматический показ вашего статуса активности.</li>
+            <li><strong>Настройка конфиденциальности.</strong> В разделе «Настройки» &rarr; «Конфиденциальность и безопасность» отключите разрешение на личные сообщения от пользователей, не являющихся вашими друзьями или участниками общих серверов. Отключите автоматический показ вашего статуса активности.</li>
             <li><strong>Регулярная проверка авторизованных устройств.</strong> В настройках аккаунта просматривайте список активных сессий. При обнаружении незнакомых устройств или локаций немедленно завершайте сеанс и меняйте пароль.</li>
           </ul>
         </section>
 
-        <section style="margin-bottom: 40px;">
-          <h2 style="font-size: 1.5em; font-weight: 600; color: #ffffff; border-bottom: 2px solid #5865f2; padding-bottom: 5px; margin-bottom: 15px;">Категорически запрещенные действия</h2>
+        <section class="safety-section">
+          <h2>Категорически запрещенные действия</h2>
           <p>Любое из перечисленных действий может привести к немедленной утрате контроля над аккаунтом.</p>
           <ul>
             <li><strong>Передача токена авторизации.</strong> Никогда и никому не сообщайте ваш токен. Техническая поддержка Discord никогда его не запрашивает. Токен — это цифровой ключ, полностью идентифицирующий вас в системе без необходимости ввода пароля.</li>
@@ -73,23 +260,23 @@
           </ul>
         </section>
 
-        <section style="margin-bottom: 40px;">
-          <h2 style="font-size: 1.5em; font-weight: 600; color: #ffffff; border-bottom: 2px solid #5865f2; padding-bottom: 5px; margin-bottom: 15px;">Токен аккаунта: местонахождение, внешний вид и риски</h2>
+        <section class="safety-section">
+          <h2>Токен аккаунта: местонахождение, внешний вид и риски</h2>
           
-          <h3 style="font-weight: 600; margin-top: 20px;">Где физически находится токен</h3>
+          <h3>Где физически находится токен</h3>
           <p>Токен хранится локально на вашем устройстве в файлах клиента Discord. Намеренный поиск и извлечение токена вне процессов отладки не рекомендуется.</p>
           <ul>
             <li><strong>Десктопный клиент (Windows, Linux, macOS):</strong> Токен хранится в зашифрованном виде в локальной базе данных LevelDB. Путь в Windows: <code>%appdata%\discord\Local Storage\leveldb</code>. В macOS и Linux пути аналогичны в директориях конфигурации. Доступ к содержимому возможен только при наличии прав текущего пользователя и ключа шифрования ОС.</li>
-            <li><strong>Браузерные версии (Веб-клиент, Chrome, Firefox):</strong> Токен хранится в локальном хранилище (LocalStorage) домена <code>discord.com</code>. Просмотр возможен через инструменты разработчика (F12 -> Application -> Local Storage -> discord.com -> token).</li>
+            <li><strong>Браузерные версии (Веб-клиент, Chrome, Firefox):</strong> Токен хранится в локальном хранилище (LocalStorage) домена <code>discord.com</code>. Просмотр возможен через инструменты разработчика (F12 &rarr; Application &rarr; Local Storage &rarr; discord.com &rarr; token).</li>
             <li><strong>Мобильные устройства (iOS, Android):</strong> Токен изолирован внутри «песочницы» приложения и не доступен без root-доступа (jailbreak/суперпользователь). Даже в этом случае он хранится в зашифрованной базе данных приложения.</li>
           </ul>
 
-          <h3 style="font-weight: 600; margin-top: 20px;">Как выглядит токен</h3>
+          <h3>Как выглядит токен</h3>
           <p>Токен представляет собой буквенно-цифровую строку, закодированную в формате Base64. Примерная структура:</p>
-          <p style="background-color: #1e1e1e; padding: 10px; border-radius: 5px; font-family: monospace; word-break: break-all;">MTA3NjYxNzY0MTg2Nzc0OTU2Ng.Gn7XaV.zsX-1x2y3z4A5b6C7d8E9f0G1h2I3j4K5l6M7n</p>
+          <p class="token-example">MTA3NjYxNzY0MTg2Nzc0OTU2Ng.Gn7XaV.zsX-1x2y3z4A5b6C7d8E9f0G1h2I3j4K5l6M7n</p>
           <p>Первая часть до первой точки — это User ID (идентификатор пользователя, не является секретом). Вторая часть после второй точки — закодированная полезная нагрузка. Конфиденциальным является вся строка целиком. Алгоритм Base64 позволяет злоумышленнику мгновенно декодировать ее для авторизации.</p>
 
-          <h3 style="font-weight: 600; margin-top: 20px;">Последствия передачи токена злоумышленнику</h3>
+          <h3>Последствия передачи токена злоумышленнику</h3>
           <p>Передача токена означает полную, безоговорочную капитуляцию контроля над учетной записью. Последствия необратимы и наступают в течение нескольких секунд:</p>
           <ol>
             <li><strong>Мгновенный захват аккаунта.</strong> Злоумышленник авторизуется без запроса пароля и 2FA-кода.</li>
@@ -101,17 +288,19 @@
           </ol>
         </section>
 
-        <section style="margin-bottom: 40px;">
-          <h2 style="font-size: 1.5em; font-weight: 600; color: #ffffff; border-bottom: 2px solid #5865f2; padding-bottom: 5px; margin-bottom: 15px;">Соблюдение возрастных ограничений Discord</h2>
+        <section class="safety-section">
+          <h2>Соблюдение возрастных ограничений Discord</h2>
           <p>Согласно Условиям использования Discord, минимальный возраст для регистрации на платформе составляет <strong>13 лет</strong>. Однако следует учитывать, что возрастная планка может быть выше в соответствии с законодательством конкретной страны. Например, в некоторых странах Европейского Союза минимальный возраст может достигать 16 лет.</p>
-          
-          <p>Категорически запрещено публичное заявление о возрасте менее 13 лет, даже в шуточной форме. Фразы, подобные «Мне 5 лет» или «Я младше 13», независимо от контекста, обрабатываются системами автоматической модерации и службой Trust & Safety как прямое доказательство нарушения.</p>
+
+          <div class="safety-warning">
+            <p>Категорически запрещено публичное заявление о возрасте менее 13 лет, даже в шуточной форме. Фразы, подобные «Мне 5 лет» или «Я младше 13», независимо от контекста, обрабатываются системами автоматической модерации и службой Trust & Safety как прямое доказательство нарушения.</p>
+          </div>
           
           <p><strong>Последствия:</strong> При обнаружении таких заявлений служба поддержки Discord блокирует учетную запись до момента предоставления официального документа, подтверждающего возраст (паспорт, ID-карта, права). Для этого необходимо отправить фото документа и селфи с ним в техподдержку. Если возраст не может быть подтвержден или он действительно ниже 13 лет, аккаунт подлежит безвозвратному удалению без права обжалования.</p>
         </section>
 
-        <section style="margin-bottom: 40px;">
-          <h2 style="font-size: 1.5em; font-weight: 600; color: #ffffff; border-bottom: 2px solid #5865f2; padding-bottom: 5px; margin-bottom: 15px;">Заключение</h2>
+        <section class="safety-section safety-conclusion">
+          <h2>Заключение</h2>
           <p>Безопасность вашей учетной записи является исключительно вашей ответственностью. Discord предоставляет инструменты для защиты, но их эффективность полностью зависит от вашей бдительности. Не переходите по сомнительным ссылкам, не запускайте неизвестный код и ни при каких обстоятельствах не разглашайте токен авторизации. Относитесь к безопасности аккаунта с той же серьезностью, с какой вы относитесь к своим персональным документам и банковским данным.</p>
         </section>
       </article>
