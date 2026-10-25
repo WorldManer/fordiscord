@@ -1,1 +1,336 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ForDis — Анкета модератора #834576</title>
+  <link rel="icon" type="image/png" href="Pictures/sitelogow.png" id="faviconLight">
+  <link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+ 
+    .apply-page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 30px 20px 60px;
+    }
+    .apply-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .apply-header h1 {
+      font-size: 2rem;
+      margin: 0 0 10px;
+      color: inherit;
+    }
+    .apply-header p {
+      opacity: 0.75;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .apply-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 26px 24px;
+      backdrop-filter: blur(8px);
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-field label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+    .form-field .hint {
+      font-size: 0.78rem;
+      opacity: 0.55;
+    }
+    .form-field input[type="text"],
+    .form-field input[type="number"],
+    .form-field textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 11px 13px;
+      border-radius: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(0, 0, 0, 0.25);
+      color: inherit;
+      font-family: inherit;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: vertical;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: #5865f2;
+      box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.25);
+    }
+    .form-field textarea {
+      min-height: 90px;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 22px;
+      padding-top: 4px;
+    }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+    .radio-group input[type="radio"] {
+      accent-color: #5865f2;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .apply-submit {
+      margin-top: 8px;
+      padding: 13px 22px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #5865f2, #7b52ff);
+      color: #fff;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+    }
+    .apply-submit:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 22px rgba(88, 101, 242, 0.4);
+    }
+    .apply-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-status {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      min-height: 20px;
+      text-align: center;
+    }
+    .form-status.success { color: #3ba55d; }
+    .form-status.error   { color: #ed4245; }
+
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+      backdrop-filter: blur(3px);
+    }
+    .modal-overlay.active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .modal-box {
+      background: #2b2d31;
+      color: #f2f3f5;
+      border-radius: 16px;
+      padding: 26px 24px 24px;
+      max-width: 430px;
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+      animation: slideUp 0.25s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: none;
+      border: none;
+      color: #b5bac1;
+      font-size: 26px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+    .modal-box h2 {
+      margin: 0 0 12px;
+      font-size: 1.25rem;
+      padding-right: 32px;
+    }
+    .modal-box .modal-text {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      opacity: 0.88;
+      margin: 0 0 16px;
+    }
+    .modal-box .modal-text strong {
+      color: #faa61a;
+    }
+    .modal-widget-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 4px;
+    }
+    .modal-widget-wrap iframe {
+      border-radius: 10px;
+      max-width: 100%;
+    }
+    .modal-note {
+      margin-top: 14px;
+      font-size: 0.78rem;
+      opacity: 0.6;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="top-panel">
+    <a href="index" class="site-brand">
+      <img src="Pictures/sitelogow.png" alt="ForDis" class="brand-icon" id="brandIcon">
+      ForDis
+    </a>
+    <div class="panel-nav">
+      <a href="avatars" class="panel-btn">Аватарки</a>
+      <a href="sounds" class="panel-btn">Звуки</a>
+      <a href="clients" class="panel-btn">Клиенты</a>
+      <a href="bots" class="panel-btn">Боты</a>
+    </div>
+    <div class="search-wrapper">
+      <div class="search-input-container">
+        <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Поиск">
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+    <a href="news" class="news-icon" title="Новости">
+      <img src="Pictures/megaphone1.png" alt="Новости" class="news-icon-img">
+    </a>
+  </header>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <a href="settings-site" class="sidebar-btn">Настройки</a>
+      <a href="rules" class="sidebar-btn">Правила</a>
+    </aside>
+
+    <main class="main-content">
+      <div class="apply-page">
+        <div class="apply-header">
+          <h1>Анкета на модератора</h1>
+          <p>Заполните все поля — заявка уйдёт на рассмотрение администрации.</p>
+        </div>
+
+        <form class="apply-form" id="moderatorForm" novalidate>
+          <div class="form-field">
+            <label for="discordNick">Ваш ник в Discord</label>
+            <input type="text" id="discordNick" name="discordNick" placeholder="например, username#0000 или @username" required>
+          </div>
+
+          <div class="form-field">
+            <label for="realName">Как вас зовут</label>
+            <input type="text" id="realName" name="realName" placeholder="Ваше имя" required>
+          </div>
+
+          <div class="form-field">
+            <label for="age">Сколько вам лет</label>
+            <input type="number" id="age" name="age" min="10" max="99" placeholder="Например, 17" required>
+          </div>
+
+          <div class="form-field">
+            <label for="discordUsage">Как давно пользуетесь Discord?</label>
+            <input type="text" id="discordUsage" name="discordUsage" placeholder="Например, 2 года" required>
+          </div>
+
+          <div class="form-field">
+            <label for="experience">Есть ли опыт? Если да, расскажите о нём</label>
+            <textarea id="experience" name="experience" placeholder="Опишите ваш опыт модерации (если есть)"></textarea>
+          </div>
+
+          <div class="form-field">
+            <label for="duties">Что вы будете делать, работая модератором?</label>
+            <textarea id="duties" name="duties" placeholder="Ваши планы и обязанности" required></textarea>
+          </div>
+
+          <div class="form-field">
+            <label for="whyYou">Почему мы должны взять именно вас?</label>
+            <textarea id="whyYou" name="whyYou" placeholder="Расскажите о своих сильных сторонах" required></textarea>
+          </div>
+
+          <div class="form-field">
+            <label>Имеется ли микрофон?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="microphone" value="Да" required> Да</label>
+              <label><input type="radio" name="microphone" value="Нет"> Нет</label>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Готовы ли вы пройти собеседование?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="interview" value="Да" required> Да</label>
+              <label><input type="radio" name="interview" value="Нет"> Нет</label>
+            </div>
+          </div>
+
+          <button type="submit" class="apply-submit" id="submitBtn">Подать заявку</button>
+          <div class="form-status" id="formStatus"></div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+
+  <div class="modal-overlay" id="widgetModal">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" aria-label="Закрыть">&times;</button>
+      <h2>Заявка отправлена 🎉</h2>
+      <p class="modal-text">
+        Пожалуйста, зайдите на наш Discord-сервер — будем очень рады вас видеть!<br><br>
+        Если вы будете на сервере и станете модератором, вас ждёт <strong>приятный бонус</strong> :D
+      </p>
+      <div class="modal-widget-wrap">
+        <iframe src="https://canary.discord.com/widget?id=1455582068695109777&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+      </div>
+      <p class="modal-note">Спасибо за вашу заявку! Мы свяжемся с вами.</p>
+    </div>
+  </div>
+
+  <script src="1x03e.js"></script>
+  <script src="ejtg984.js"></script>
+</body>
+</html>
