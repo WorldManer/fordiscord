@@ -11,7 +11,10 @@
     .apply-page { max-width: 760px; margin: 0 auto; padding: 30px 20px 60px; }
     .apply-logo { display: flex; justify-content: center; margin-bottom: 22px; }
     .apply-logo img {
-      max-width: 220px; width: 60%; height: auto;
+      display: block;
+      max-width: 220px;
+      width: 60%;
+      height: auto;
       -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none;
       -o-user-drag: none; user-drag: none;
       user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
@@ -66,8 +69,6 @@
     .form-status { margin-top: 6px; font-size: 0.9rem; min-height: 20px; text-align: center; line-height: 1.45; }
     .form-status.success { color: #3ba55d; }
     .form-status.error   { color: #ed4245; }
-    .protected { position: relative; display: inline-block; }
-    .protected::after { content: ""; position: absolute; inset: 0; z-index: 2; }
   </style>
 </head>
 <body>
@@ -106,7 +107,7 @@
     <main class="main-content">
       <div class="apply-page">
 
-        <div class="apply-logo protected">
+        <div class="apply-logo">
           <img src="apex_logo.png" alt="APEX CORP">
         </div>
 
@@ -158,13 +159,13 @@
   <script src="ejtg984.js"></script>
   <script>
     document.addEventListener('contextmenu', function (e) {
-      if (e.target.closest('.protected')) e.preventDefault();
+      if (e.target.tagName === 'IMG') e.preventDefault();
     });
     document.addEventListener('dragstart', function (e) {
-      if (e.target.closest('.protected')) e.preventDefault();
+      if (e.target.tagName === 'IMG') e.preventDefault();
     });
-    document.addEventListener('selectstart', function (e) {
-      if (e.target.closest('.protected')) e.preventDefault();
+    document.addEventListener('copy', function (e) {
+      if (e.target.tagName === 'IMG') e.preventDefault();
     });
   </script>
 </body>
